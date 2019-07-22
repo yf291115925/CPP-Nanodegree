@@ -1,0 +1,36 @@
+You will start working on the RoutePlanner class, which will contain methods to perform the A* search.
+To conduct a search, a RoutePlanner class instance will first be initialized starting and ending coordinates provided by the user as float values.
+However, this presents a problem: these float values might not exactly correspond to any given node on the map.
+
+=>在進行A*之前, 會讓user 輸入開始和終點座標, 但這些座標未必在open street data 上有對應適合的node,
+因此我們要找出,  最靠近usesr 輸入的開始結束座標 又能在 open street map 上合法的Node.
+
+
+in order for the search to be performed with the map data, you will be finding a path between two nodes.
+This means that you need to find the nodes in the RouteModel that are closest to the starting and ending coordinates given by the user.
+In this exercise, you will write a method FindClosestNode that accepts two floats and finds the closest node in your model.
+
+=> 所以 做一個 function (inputx,inputy) => return 一個和它最靠近的Node
+
+
+
+Note that while it might be tempting to just iterate over all nodes in the SNodes() vector to find the closest node, in practice,
+that will not turn out well. Many nodes in the OSM data are on closed paths or may be isolated is some other way.
+If you choose one one of these nodes, you may not be able to find a path from that node to the end node.
+To avoid this, you will choose the closest node that is on a road that is not a footway. In other words, a node that is not of Model::Road::Type::Footway type.
+
+
+
+To complete this exercise:
+1.Add a public method declaration FindClosestNode in the RouteModel class in route_model.h.
+    This method should accept two floats x and y as arguments, and should return a reference to a RouteModel::Node object.
+2.Add a method definition route_model.cpp
+3.In the body of the method, you will need to do the following:
+    a.Create a temporary Node with x and y coordinates given by the method inputs.
+    b.Create a float min_dist = std::numeric_limits<float>::max() for the minum distance found in your search.
+    c.Create an int variable closest_idx to store the index of the closest
+    d.Write a loop that iterates through the vector given by calling Roads().
+    e.For each reference &road in the vector, check that the type is not a footway: road.type != Model::Road::Type::Footway. If the road is not a footway:
+        e.1 Loop over each node index in the way that the road belongs to: Ways()[road.way].nodes.
+        e.2 Update closest_idx and min_dist, if needed.
+    f.Return the node from the SNodes() vector using the found index.

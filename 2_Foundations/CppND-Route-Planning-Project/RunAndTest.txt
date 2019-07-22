@@ -1,0 +1,26 @@
+Run Commands from Build Directory
+
+To compile and run:
+
+../bin/CppND-Route-Planning-Project -f ../map.osm
+
+Individual Tests:
+
+cmake .. "-DTESTING=RouteModel" && make && ../bin/test
+
+cmake .. "-DTESTING=RMNodeClass" && make && ../bin/test
+
+cmake .. "-DTESTING=RMSNodes" && make && ../bin/test
+
+cmake .. "-DTESTING=NodeDist" && make && ../bin/test
+
+cmake .. "-DTESTING=NodeToRoad" && make && ../bin/test
+
+cmake .. "-DTESTING=FindNeighbors" && make && ../bin/test
+
+cmake .. "-DTESTING=FindClosest" && make && ../bin/test
+
+cmake .. "-DTESTING=AStarStub" && make && ../bin/test
+
+cmake .. "-DTESTING=AStarSearch" && make && ../bin/test
+

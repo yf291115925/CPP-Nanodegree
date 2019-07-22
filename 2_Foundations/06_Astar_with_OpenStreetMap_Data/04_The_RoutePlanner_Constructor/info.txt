@@ -1,0 +1,16 @@
+The RoutePlanner Constructor
+Now that you have filled out the header of the RoutePlanner class,
+you can finish writing the constructor in route_planner.cpp.
+
+The constructor takes one RouteModel reference and four floats as arguments.
+The RouteModel reference should have been assigned to the m_Model variable in the previous exercise.
+In this exercise, the floats should be used to construct the start_node and end_node of your class.
+Since node coordinates are scaled to values 'between 0 an 1', you will need to scale the
+floats as well in the constructor. See the instructions below for the steps on how to do this.
+
+To complete this exercise:
+Within the body of the RoutePlanner constructor:
+    a.Scale the floats to percentages by multiplying each float by 0.01 and storing
+        the result in the float variable. For example: start_x *= 0.01;
+    b.Use the m_Model.FindClosestNode method to find the closest nodes to (start_x, start_y)
+        and (end_x, end_y). Store pointers to these nodes in the start_node and end_node class variables.

@@ -1,0 +1,28 @@
+CMake and Make
+CMake is an open-source, platform-independent build system. CMake uses text documents, labeled as CMakeLists.txt files,
+to manage platform-specific build environments, like make.
+
+Unfortunately, an in-depth tutorial on CMake is beyond the scope of this course,
+but we can discuss the basics of how CMake works, so you will be ready to use it in your project.
+
+
+CMakeLists.txt
+CMakeList.txt files have a hierarchical structure, and one CMakeList.txt file can be included in each directory of the project.
+These files can be used to specify the locations of necessary packages, set build flags and environment variables, specify build target names and locations, and other actions.
+
+
+CMake Project
+A typical CMake project will have a top-level CMakeLists.txt and a build directory. From within the build directory, you could run
+
+root@abc123defg:/my_project/build# cmake ..
+root@abc123defg:/my_project/build# make
+
+
+The first line directs the cmake command at the top-level CMakeLists.txt file with ...
+This command uses the top-level CMakeLists.txt to configure the project and create a Makefile.
+
+In the second line, make finds the Makefile and uses the instructions in the Makefile to build the project.
+
+
+In general, CMake only needs to be run once for a project, unless you are changing build options (e.g. using different build flags).
+Make will be able to keep track of which files have changed and compile only those that need to be before building.

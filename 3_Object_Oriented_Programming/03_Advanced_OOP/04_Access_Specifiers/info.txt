@@ -1,0 +1,50 @@
+Inherited Access Specifiers
+Just as access specifiers (i.e. public, protected, and private) define which class members users can access,
+the same access modifiers also define which class members users of a derived classes can access.
+
+=> 繼承的 access 指定功能, 在討論的就是下面 "   " 裡面的可能, 也是 public, protected, 和 private
+
+class Car : "public" vehicle {
+
+}
+
+
+Car 是衍伸class (derived class), vehicle 是母class (base class)
+
+
+
+**核心觀念就是, 用這個 "修飾詞" 來繼承, 代表base class 轉到新的延伸class 中, 最高層級,
+    base 中比我要的開放的, 都被轉成我要的, 比我要低的, 持續保持
+
+=> 一個控制進我derived class 的過濾器
+
+Public inheritance: the public and protected members of the base class listed after the specifier keep
+                        their member access in the derived class
+
+=> 用最public 的方式來繼承 base class, 表示此 延伸class 可以保留所有原本 base 的屬性
+
+
+
+Protected inheritance: the public and protected members of the base class listed after the specifier are
+                        protected members of the derived class
+
+=>用protected 來繼承, 表示 原本base class 的public -> protected. private 保持private
+
+
+
+Private inheritance: the public and protected members of the base class listed after the specifier are
+                        private members of the derived class
+
+=> 用private , 表示base class 中比private 高的都變成 private, 因此原本 public, protected 轉到 derived class 都改成 private了
+
+Source: C++ reference
+
+
+
+
+Instructions
+    Update the derived classes so that one has protected inheritance and one has private inheritance.
+    Try to access a protected member from main(). Is it possible?
+    Try to access a private member from main(). Is it possible?
+    Try to access a member of the base class from within the derived class that has protected inheritance. Is it possible?
+    Try to access a member of the base class from within the derived class that has private inheritance. Is it possible?

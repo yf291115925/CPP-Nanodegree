@@ -1,0 +1,55 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_904f2/fast 
+/usr/bin/make -f CMakeFiles/cmTC_904f2.dir/build.make CMakeFiles/cmTC_904f2.dir/build
+make[1]: Entering directory '/home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_904f2.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_904f2.dir/CheckSymbolExists.c.o   -c /home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_904f2
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_904f2.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_904f2.dir/CheckSymbolExists.c.o  -o cmTC_904f2 
+CMakeFiles/cmTC_904f2.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_904f2.dir/build.make:86: recipe for target 'cmTC_904f2' failed
+make[1]: *** [cmTC_904f2] Error 1
+make[1]: Leaving directory '/home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_904f2/fast' failed
+make: *** [cmTC_904f2/fast] Error 2
+
+File /home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_455c6/fast 
+/usr/bin/make -f CMakeFiles/cmTC_455c6.dir/build.make CMakeFiles/cmTC_455c6.dir/build
+make[1]: Entering directory '/home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_455c6.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_455c6.dir/CheckFunctionExists.c.o   -c /usr/local/share/cmake-3.14/Modules/CheckFunctionExists.c
+Linking C executable cmTC_455c6
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_455c6.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_455c6.dir/CheckFunctionExists.c.o  -o cmTC_455c6 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_455c6.dir/build.make:86: recipe for target 'cmTC_455c6' failed
+make[1]: *** [cmTC_455c6] Error 1
+make[1]: Leaving directory '/home/hein/Documents/C++Nanodegree/C++Foundations/CppND-Route-Planning-Project/build/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_455c6/fast' failed
+make: *** [cmTC_455c6/fast] Error 2
+
+

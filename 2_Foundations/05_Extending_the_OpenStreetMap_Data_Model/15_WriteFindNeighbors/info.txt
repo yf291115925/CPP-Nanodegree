@@ -1,0 +1,50 @@
+In this exercise, modify route_model.h and route_model.cpp to add a RouteModel::Node method FindNeighbors. (之前的是 FindNeighbor.. 沒有 s)
+The goal of FindNeighbors is to populate the neighbors vector of the current Node object (the vector this->neighbors).
+=>目標是把跟current Node 的所有 neighbors 們, 填成 vector, 都 append 起來
+
+Each road that the current node is a part of can be thought of as a possible direction to travel,
+much like teh up, down, left, right directions from the first A* search project. This means that you will want to find the
+closest neighbor from each road that the current node this belongs to.
+
+=> 每一個 road 就有可能是我們要去的地方, 因此我想知道現在那條road 離我當下node 最近, road1 or road2....
+
+要完成上面這件事, 就要找出road1,2,3... 所有各自擁有的的node1 set, node2 set,....(在透過road id -> 查是在哪個way -> 所擁有的nodes, 才能node node 比距離)
+
+
+
+
+You can get each road that the current node belongs to using the node_to_road hash table as follows:
+
+而之前做好的 node_to_road hashmap 就是讓你  <key = node idx, 此node 可能出現的 vector<roads> >
+
+
+
+    parent_model->node_to_road[this->index] //這就會讓你拿到 有此 node 所出現在的roadS
+
+
+
+
+
+Once you have a road, you can get a vector containing all other node indices on that road with a similar construction to what you have seen before:
+在用所有得到的roads 去查它又分別是在哪個way 裡面, 並且提出nodes, 這樣你就有那些roads 所經過的nodes 了
+
+    parent_model->Ways()[road->way].nodes// 會得到一組 nodes, 這時候可以用上一回做的 FindNeighbor 去取得這組nodes 中 跟現在cur node 最近的是哪個node
+
+
+
+You can then use the FindNeighbor method with that vector of node indices to find a pointer to the closest node.
+=> 用FindNeighbor 找出每個roadi 個別離curNode 最近的Nodes, 都把這些Nodes 當成 curNode 的 Neighbor, push 進 std::vector<Node*> neighbors;
+    也就是說, 方格版的A* neighbor 只有上下左右, 但在這裡, 不只四個, 看roads 有幾個, 下個該訪問的就有幾個, 而那些該訪問的點, 已經是roadi 離 cur Node 最近的了
+
+
+
+
+Since FindNeighbors operates on the current Node and modifies the Node data, it does not need any arguments and can have return type void.
+
+To complete this exercise:
+    1.Add a public FindNeighbors declaration to the RouteModel::Node class in route_model.h.
+        This method will be called from route_planner.cpp, so the method needs to be public. FindNeighbors should take no arguments and have void return type.
+    2.In route_model.cpp define the FindNeighbors method.
+    3.With the FindNeighbors method, for each road reference &road in the vector parent_model->node_to_road[this->index],
+        FindNeighbors should use the FindNeighbor method to create a pointer of RouteModel::Node* type.
+    4.If that pointer is not a nullptr, push the pointer to the back of this->neighbors.

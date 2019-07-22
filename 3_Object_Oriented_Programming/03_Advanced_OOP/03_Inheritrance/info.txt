@@ -1,0 +1,88 @@
+Inheritence
+In our everyday life, we tend to divide things into groups, based on their shared characteristics.
+Here are some groups that you have probably used yourself: electronics, tools, vehicles, or plants.
+
+日常經驗中, 我們會把東西分成group 基於他們的特徵
+譬如說 電器, 工具, 交通工具, 或是植物
+
+
+
+Sometimes these groups have hierarchies. For example, computers and smartphones are both types of electronics,
+but computers and smartphones are also groups in and of themselves. You can imagine a tree with "electronics" at the top,
+and "computers" and "smartphones" each as children of the "electronics" node.
+
+"有時候這些 group 有階層上的關係"
+
+譬如電腦和手機都屬於電子用品這類, 而他們自己也是一種group
+
+
+                                    -----------------
+                                    |               |
+                                    |   electronics |
+                                    |               |
+                                    -----------------
+                                /                       \
+                               /                          \
+                              /                             \
+            -----------------                                -----------------
+            |               |                                |               |
+            |   computers   |                                |   smartphones |
+            |               |                                |               |
+            -----------------                                -----------------
+
+
+
+OOP 就是用這個原則
+
+
+拿 Vehicles 來說
+
+class Vehicle {
+public:
+  int wheels = 0;
+  string color = "blue";
+
+  void Print() const
+  {
+    std::cout << "This " << color << " vehicle has " << wheels << " wheels!\n";
+  }
+};
+
+
+We can derive other classes from Vehicle, such as Car or Bicycle.
+
+One advantage is that this saves us from having to
+define all of the common member variables: in this case, wheels and color.
+
+Another benefit is that the derived classes, Car and Bicycle, can have distinct member variables,
+such as sunroof or kickstand. Different derived classes will have different member variables:
+
+
+ Car 和 Bicycle 都是繼承 vehicle
+繼承的好處
+    1.Car 和 bicycle 都不用再定義 wheels, color 這些通用性東西, 這些在更高的層級制定就好, 且到時候如果要改大屬性
+        只要在vehicle 改即可, 不用深入下去每個人個別改
+    2.而自己car , 和 bicycle 可以自己有屬於自己的特別變數, 不會跟別人搞混
+
+
+
+ex:
+
+class Car : public Vehicle {
+public:
+  bool sunroof = false;
+};
+
+class Truck : public Vehicle {
+public:
+  bool kickstand = true;
+};
+
+
+
+
+
+
+
+
+#

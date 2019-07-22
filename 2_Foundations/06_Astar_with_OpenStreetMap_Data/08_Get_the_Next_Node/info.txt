@@ -1,0 +1,49 @@
+Get the Next Node
+You will write a RoutePlanner::NextNode method which will sort the list
+of open nodes in the A* search, return the node with the lowest f-value,
+and remove the node from the list of open nodes.
+
+=> 從 open nodes list 中挑出一個 f value 最小的, 且把它從open list 中移除
+
+
+Remember that the f-value is the sum of the g-value, and the h-value.
+The g-value can be thought of as the distance cost, and this increases with
+each step in the search. Having this cost as part of the criteria for choosing
+the next node ensures that the search finds the shortest path possible.
+
+f = g + h
+g 會每步 + 1, 確保一部分的決定不會往回走, 跟上一步的g 做出區別
+
+
+The h-value, given by the heuristic function, gets smaller as you get closer to the end node.
+Including the h-value as part of the criteria for choosing the next node ensures that
+you are constantly moving towards the goal.
+
+As you continue to develop your project, it will be easier to store the open list in the class
+as a vector of pointers to RouteModel::Node objects, so you will do that in this exercise as well.
+
+也用一個 open list 來存 Node
+我們目前只有 node 理的 neighbor vector, final path vector, 還沒有地方存待處裡的 nodes
+
+
+
+
+To complete this exercise:
+1.In the RoutePlanner class in route_planner.h,
+    add a private class member variable open_list.
+    The open_list should be a vector of RouteModel::Node pointers.
+2.Modify route_planner.h to include a private function declaration
+    for the NextNode method. Since the method is just modifying the
+    open_list and returning a pointer to a node, NextNode does not need any arguments.
+    The method should return a pointer to a RouteModel::Node object.
+3.In route_planner.cpp define the NextNode method. This method should:
+    a.Sort the open_list according to the f-value, which is the sum of a node's h-value and g-value.
+    b.Create a copy of the pointer to the node with the lowest f-value.
+    c.Erase that node pointer from open_list.
+    d.Return the pointer copy.
+
+
+Note: Since the NextNode method is private,
+there will not be any tests for this exercise.
+You will be able to test that the method is working with your
+A* implementation in upcoming exercises.

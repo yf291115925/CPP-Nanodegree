@@ -1,0 +1,83 @@
+You are now ready to look at the starter code that you'll be using for the project.
+This code comes from a map rendering example in the Github repo for the 2D Graphics Library, IO2D.
+ You will be extending the code to search for and display a path between two points on the map.
+
+The process that you go through to develop your project will similar to the process you might go through to use or extend other open source code.
+By the time you finish this project, you will be ready to start working on your own projects!
+
+We've modified the IO2D example code slightly to help you get you started with the project.
+In particular, we included some class stubs that will help you extend the existing classes, and we added a few short plotting functions.
+
+=============
+Code Structure
+=============
+The starter code for the project can be found here. This code is already loaded into a workspace,
+and you will not need to download or run the code locally to do the project.
+It may be a good idea to open the repository in a different tab and follow along as you read through the descriptions below, however.
+In the repo, you should see the following five directories:
+
+cmake
+
+    This directory contains some CMakeLists.txt files that are needed for the project to find necessary libraries.
+    You will not need to work with this directory for this project.
+
+instructions
+
+    This directory contains a set of markdown instruction files for the exercises.
+    Again, you will not need to work directly with the files here, but each set of instructions will be
+    displayed in the terminal workspace for the appropriate exercise as you work on the project.
+
+src
+
+    The source code for the project is contained here, and this is where you will be doing all of the project work.
+    See below for more information about the contents of this directory.
+
+test
+
+    This directory contains unit tests for various exercises, implemented using the Google Test framework. As you are developing your code,
+    it may be helpful to look at the relevant test in this directory to see the expected answer and corresponding code.
+    If your code fails a test, the console will tell you which file contains the failing test.
+
+thirdparty
+
+    This directory contains third party libraries that have been included with this project.
+    You will not need to work directly with this code.
+
+
+=============
+The src Directory
+=============
+Let's have a closer look at the src directory, since this is where you will be doing most of the work.
+
+main.cpp
+    The main.cpp controls the flow of the program, accomplishing four primary tasks:
+
+    The OSM data is read into the program.
+    A RouteModel object is created to store the OSM data in usable data structures.
+    A RoutePlanner object is created using the RouteModel. This planner will eventually carry out the A* search on the model data and store the search results in the RouteModel.
+    The RouteModel data is rendered using the IO2D library. Have a look at the video below for a brief overview of this file:
+
+model.h and model.cpp
+    These files come from the IO2D example code. They are used to define the data structures and methods that read in and store OSM data.
+    OSM data is stored in a Model class which contains nested structs for Nodes, Ways, Roads, and other OSM objects. You will be extending this class in your project.
+    Have a look at the video below for an overview of the code in these two files.
+
+
+render.h and render.cpp
+    These files from the IO2D example code take model data and render it on a map. We have modified these files slightly
+    to include three extra methods which render the start point, end point, and path from the A* search. You won't need to work too much with these files,
+    but you will uncomment the code to render the results of your search at some point. Have a look at the video below for a brief overview of the file code.
+
+
+route_model.h and route_model.cpp
+    These files contain class stubs which will be used to extend the Model and Node data structures from model.h and model.cpp using class inheritance.
+    Remember that inheritance in this case will you to use all of the public methods and attributes of the Model and Node classes in the derived classes.
+    You will be filling out the classes in route_model.h and route_model.cpp over the course of your project.
+
+    Have a look at the video below for a brief overview of the contents of these files.
+
+
+route_planner.h and route_planner.cpp
+    These files contain a class stub for a RoutePlanner class which accepts a RouteModel along with start and end coordinates.
+    The RouteModel data, along with the start and end points will be used for A* search, which will be implemented in these files.
+    Have a look a the video below for a brief overview of the contents.

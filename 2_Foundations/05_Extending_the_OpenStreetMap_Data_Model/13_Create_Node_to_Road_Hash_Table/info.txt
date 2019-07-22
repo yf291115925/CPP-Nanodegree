@@ -1,0 +1,126 @@
+====================
+        A
+====================
+
+When you begin to write A* search, you will be searching between two nodes on the map. We would like the search path to
+follow the roads that the nodes are on, but a given node doesn't have any information about which road it belongs to.
+To rectify this problem, you will write a function that creates a hash table of Node index values to a vector of Road pointers that those nodes belong to.
+
+=>
+做一個 map <key= node id, 會出現此Node的路名的 Road pointers>
+
+把 每個Node 出現在哪些road 中, 放入 map 去 , 以後會用到
+
+
+在先前的A* 代碼中, 我們找到 Node 跟 Node之間的路, 但因為當時是把整個2D block 切成 小node, 所以直接找Node
+就可以最後連起來變成path
+
+但是在這邊, Node 在xml 的資料並不是像網格一樣連著, 可能兩個Node 是在各自需要出現的地方(一些feature上)
+所以為了最後要能知道走那條道路, 你除了找到Node 之間的關係之外, 必須對應回到這些Node 是屬於那條路的,
+譬如 你發現 Node2 是Node1 下一步, 因在xml裡面, Node2 不一定在Node1的上下左右, 因此
+你需要知道, Node2 是在那條路, 假設是 road A, 於是Node1 走 raodA 會抵達 Node2, 而這條roadA 才是能畫在
+圖上的, 也是我們要走得roadA (在地圖裡不會直接走兩點連線, 要真的有這條 roadA)
+
+====================
+        B
+====================
+//回顧一下data 的種類
+Nodes
+    A node is one of the most basic elements in the OpenStreetMap data model.
+    Each node indicates a single point with an identifier id, latitude lat, and longitude lon.
+    There are other XML attributes in a node element that won't be relevant to this project,
+    such as the user id and the timestamp when the node was added to the data set.
+    Additionally, a node can have several tags which provide additional information.
+
+    =>Node 是最基本的單位, 一個Node 可以有很多tag, 也就是說一個Node 可以被標注很多屬性
+
+Ways
+    A way is an ordered list of nodes that represents a feature in the map.
+    This feature could be a road, or a boundary of a park, or some other feature in the map.
+    Each way has at least one tag which denotes some information about the way,
+    and each way also belongs to at least one relation, which is described below.
+    => Ways 是一個由Node 排序成的list, 代表這個map 上的一些特徵
+        這些特徵可能是
+            一條路, 一個公園的邊界, 一些景點
+    => 每個way 至少有一個tag 去說明它代表哪個特色
+    => 每個way 也有最少有一種關係, 關係的可能如下
+
+
+
+Relations
+    A relation is a data structure which documents a relationship
+    between other data elements. Examples from the OpenStreetMap wiki include:
+        A route relation which lists the ways that form a major highway, cycle route, or bus route.
+        A multipolygon that describes an area with holes, where the outer and inner boundaries of the area are given by two ways.
+
+    => Relation 是一個資料結構, 它紀錄的兩個data元素的關係
+        譬如說:
+                a. route relation: 會列出那些ways 從高速公路, 或是 環狀route
+                b. multipolygon relation: 有這種relations 的ways 表示有個區域是有個洞, 有內外邊界的
+
+
+Code:
+
+    struct Node {
+        double x = 0.f;
+        double y = 0.f;
+    };
+
+    struct Way {
+        std::vector<int> nodes;
+    };
+
+    struct Road {
+        enum Type { Invalid, Unclassified, Service, Residential,
+                    Tertiary, Secondary, Primary, Trunk, Motorway, Footway };
+        int way;
+        Type type;
+    };
+
+    struct Railway {
+        int way;
+    };
+
+    struct Multipolygon {
+        std::vector<int> outer;
+        std::vector<int> inner;
+    };
+
+    struct Landuse : Multipolygon {
+        enum Type { Invalid, Commercial, Construction, Grass, Forest, Industrial, Railway, Residential };
+        Type type;
+    };
+
+
+
+    Note that each Model::Road object has a .way attribute, which is the index of the way that the road belongs to in the Ways() vector.
+    Each Model::Way object has a .nodes attribute, which is a vector of node indices. This means that for a given Road object road,
+    you can find all the node indices related to the road with Ways()[road.way].nodes.
+
+    Road.way => 這條路屬於哪個way ex: way 5
+    也就是放在  way vector = m_Ways[5] 裡面, 有屬於他的nodes, 也就是m_Ways[5].nodes,
+    因此, 要的到一個road 上的所有點, 就是把上面兩個套起來
+        m_Ways[road.way].nodes
+
+
+
+
+To complete this exercise:
+        1.Add a private variable node_to_road in the RouteModel class in route_model.h. This variable should be an unordered_map with an int key type,
+            and a vector of const Model::Road* as the value type.
+
+        2.Add a method declaration CreateNodeToRoadHashmap in the RouteModel class in route_model.h.
+            This method will operate only on the node_to_road variable declared above, and only within the
+            RouteModel class, so it can be private, it needs no arguments, and can have void return type.
+
+        3.Add a method definition in route_model.cpp. In the body of the method, you will need to do the following:
+            a.Write a loop that iterates through the vector given by calling Roads().
+            b.For each reference &road in the vector, check that the type is not a footway: road.type != Model::Road::Type::Footway. If the road is not a footway:
+                b.1 Loop over each node_idx in the way that the road belongs to: Ways()[road.way].nodes.
+                    b.11 If the node index is not in the node_to_road hashmap yet, set the value for the node_idx key to be an empty vector of const Model::Road* objects.
+                    b.12 Push a pointer to the current road in the loop to the back of the vector given by the node_idx key in node_to_road.
+
+        4.Call CreateNodeToRoadHashmap() in the RouteModel constructor in route_model.cpp.
+
+        5.Lastly, add a public getter function GetNodeToRoadMap() in the RouteModel class in route_model.h.
+            This function should return a reference to the node_to_road variable, and it will be primarily used for testing.

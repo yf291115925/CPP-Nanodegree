@@ -1,0 +1,229 @@
+
+
+
+==============
+Step1: Install IO2D
+==============
+Build/put io2d anaywhere you like
+
+Follow from the github: https://github.com/cpp-io2d/P0267_RefImpl/blob/master/BUILDING.md
+Section:Cairo/Xlib on Linux
+
+
+
+CMake script expects cairo and graphicsmagick to be installed. libpng is required in order to run tests. These installation steps assume APT package manager on Ubuntu Linux. Installation steps:
+
+	Refresh apt: sudo apt update
+	Install GCC: sudo apt install build-essential
+
+	**********************************
+	* Don't install cmake from apt cmd
+	**********************************
+	X Install CMake: sudo apt install cmake => Please use 3.13.4, don't install from sudo apt...
+
+
+		https://github.com/Kitware/CMake/releases/tag/v3.13.4, download the source code and extract it.
+
+
+		Run command from : https://gitlab.kitware.com/cmake/cmake
+
+		$ ./bootstrap && make && sudo make install
+		=>open new terminal to get new cmake config, then keep doing the following cmds
+
+
+
+	Install Cairo: sudo apt install libcairo2-dev
+	Install graphicsmagick: sudo apt install libgraphicsmagick1-dev
+	Install libpng: sudo apt install libpng-dev
+
+
+Example of CMake execution:
+
+	git clone --recurse-submodules https://github.com/cpp-io2d/P0267_RefImpl
+	cd P0267_RefImpl
+	mkdir Debug
+	cd Debug
+	cmake --config Debug "-DCMAKE_BUILD_TYPE=Debug" ..
+	cmake --build .
+
+
+Build and install: still under Debug folder
+
+	make
+	sudo make install
+
+
+
+
+==============
+Step2: Build ND project
+==============
+
+Check the info from : https://github.com/udacity/CppND-Route-Planning-Project
+
+1. git clone https://github.com/udacity/CppND-Route-Planning-Project.git --recurse-submodules
+
+=> cd to the folder CppND-Route-Planning-Project
+2. mkdir build && cd build
+3. cmake ..
+		#log
+		jerry:build$ cmake ..
+		TESTING = notest
+		-- The C compiler identification is GNU 7.3.0
+		-- The CXX compiler identification is GNU 7.3.0
+		-- Check for working C compiler: /usr/bin/cc
+		-- Check for working C compiler: /usr/bin/cc -- works
+		-- Detecting C compiler ABI info
+		-- Detecting C compiler ABI info - done
+		-- Detecting C compile features
+		-- Detecting C compile features - done
+		-- Check for working CXX compiler: /usr/bin/c++
+		-- Check for working CXX compiler: /usr/bin/c++ -- works
+		-- Detecting CXX compiler ABI info
+		-- Detecting CXX compiler ABI info - done
+		-- Detecting CXX compile features
+		-- Detecting CXX compile features - done
+		CMake Warning (dev) at cmake/FindCairo.cmake:63 (set):
+		  Cannot set "CAIRO_PATH": current scope has no parent.
+		Call Stack (most recent call first):
+		  CMakeLists.txt:28 (find_package)
+		This warning is for project developers.  Use -Wno-dev to suppress it.
+
+		-- Found PythonInterp: /usr/bin/python (found version "2.7.15") 
+		-- Looking for pthread.h
+		-- Looking for pthread.h - found
+		-- Looking for pthread_create
+		-- Looking for pthread_create - not found
+		-- Looking for pthread_create in pthreads
+		-- Looking for pthread_create in pthreads - not found
+		-- Looking for pthread_create in pthread
+		-- Looking for pthread_create in pthread - found
+		-- Found Threads: TRUE  
+		-- Configuring done
+		-- Generating done
+		-- Build files have been written to: /home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/build
+
+
+4. make
+		#log
+		jerry:build$ make
+		Scanning dependencies of target route_planner
+		[  5%] Building CXX object src/CMakeFiles/route_planner.dir/route_planner.cpp.o
+		[ 10%] Building CXX object src/CMakeFiles/route_planner.dir/model.cpp.o
+		[ 15%] Building CXX object src/CMakeFiles/route_planner.dir/route_model.cpp.o
+		[ 15%] Built target route_planner
+		Scanning dependencies of target pugixml
+		[ 20%] Building CXX object thirdparty/pugixml/CMakeFiles/pugixml.dir/src/pugixml.cpp.o
+		[ 25%] Linking CXX static library ../../../lib/libpugixml.a
+		[ 25%] Built target pugixml
+		Scanning dependencies of target CppND-Route-Planning-Project
+		[ 30%] Building CXX object src/CMakeFiles/CppND-Route-Planning-Project.dir/main.cpp.o
+		[ 35%] Building CXX object src/CMakeFiles/CppND-Route-Planning-Project.dir/model.cpp.o
+		[ 40%] Building CXX object src/CMakeFiles/CppND-Route-Planning-Project.dir/render.cpp.o
+		[ 45%] Building CXX object src/CMakeFiles/CppND-Route-Planning-Project.dir/route_model.cpp.o
+		[ 50%] Building CXX object src/CMakeFiles/CppND-Route-Planning-Project.dir/route_planner.cpp.o
+		[ 55%] Linking CXX executable ../../bin/CppND-Route-Planning-Project
+		[ 55%] Built target CppND-Route-Planning-Project
+		Scanning dependencies of target gtest
+		[ 60%] Building CXX object thirdparty/googletest/googlemock/gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+		[ 65%] Linking CXX static library ../../../../lib/libgtest.a
+		[ 65%] Built target gtest
+		Scanning dependencies of target gtest_main
+		[ 70%] Building CXX object thirdparty/googletest/googlemock/gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o
+		[ 75%] Linking CXX static library ../../../../lib/libgtest_main.a
+		[ 75%] Built target gtest_main
+		Scanning dependencies of target test
+		[ 80%] Linking CXX executable ../../bin/test
+		[ 80%] Built target test
+		Scanning dependencies of target gmock
+		[ 85%] Building CXX object thirdparty/googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o
+		[ 90%] Linking CXX static library ../../../lib/libgmock.a
+		[ 90%] Built target gmock
+		Scanning dependencies of target gmock_main
+		[ 95%] Building CXX object thirdparty/googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o
+		[100%] Linking CXX static library ../../../lib/libgmock_main.a
+		[100%] Built target gmock_main
+
+
+
+
+Running: Should pop out a small map windows
+
+jerry:build$ ../bin/CppND-Route-Planning-Project -f ../map.osm 
+Reading OpenStreetMap data from the following file: ../map.osm
+
+
+
+Testing:
+
+
+jerry:build$ cmake -DTESTING="RouteModel" ..
+TESTING = RouteModel
+CMake Warning (dev) at cmake/FindCairo.cmake:63 (set):
+  Cannot set "CAIRO_PATH": current scope has no parent.
+Call Stack (most recent call first):
+  CMakeLists.txt:28 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/build
+
+
+
+
+
+jerry:build$ make
+[ 14%] Built target route_planner
+[ 23%] Built target pugixml
+[ 52%] Built target CppND-Route-Planning-Project
+[ 61%] Built target gtest
+[ 71%] Built target gtest_main
+Scanning dependencies of target test
+[ 76%] Building CXX object test/CMakeFiles/test.dir/utest_route_model_class.cpp.o
+In file included from /home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/thirdparty/googletest/googletest/include/gtest/gtest.h:384:0,
+                 from /home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/test/utest_route_model_class.cpp:1:
+/home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/test/utest_route_model_class.cpp: In member function ‘virtual void RouteModelTest_RouteModelData_Test::TestBody()’:
+/home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/test/utest_route_model_class.cpp:52:21: error: ‘class RouteModel’ has no member named ‘SNodes’; did you mean ‘Nodes’?
+     ASSERT_EQ(model.SNodes().size(), 0);
+                     ^
+/home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/test/utest_route_model_class.cpp:52:5: error: template argument 1 is invalid
+     ASSERT_EQ(model.SNodes().size(), 0);
+     ^
+/home/jerry/workspace/cpp_ud/git_code/02_foundations/05_extending_openStreetMap/03_IO2D_starter_code/CppND-Route-Planning-Project/test/utest_route_model_class.cpp:52:21: error: ‘class RouteModel’ has no member named ‘SNodes’; did you mean ‘Nodes’?
+     ASSERT_EQ(model.SNodes().size(), 0);
+                     ^
+test/CMakeFiles/test.dir/build.make:62: recipe for target 'test/CMakeFiles/test.dir/utest_route_model_class.cpp.o' failed
+make[2]: *** [test/CMakeFiles/test.dir/utest_route_model_class.cpp.o] Error 1
+CMakeFiles/Makefile2:187: recipe for target 'test/CMakeFiles/test.dir/all' failed
+make[1]: *** [test/CMakeFiles/test.dir/all] Error 2
+Makefile:129: recipe for target 'all' failed
+make: *** [all] Error 2
+
+=> Becasue you are not start to implement the code yet, error is normal.
+
+
+
+Those commands will build the code with the tests for the "Fill Out Route Model" exercise. The tests can then be run from the build directory as follows:
+
+../bin/test
+
+
+
+
+Exercise Name			-DTESTING String Value
+Fill Out Route Model		"RouteModel"
+Fill Out Node Class		"RMNodeClass"
+Create RouteModel Nodes		"RMSNodes"
+Write the Distance Function	"NodeDist"
+Create Road to Node Hashmap	"NodeToRoad"
+Write FindNeighbors		"FindNeighbors"
+Find the Closest Node		"FindClosest"
+Write the A* Search Stub	"AStarStub"
+Finish A* Search		"AStarSearch"
+
+
+
+
+	
+
